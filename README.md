@@ -12,6 +12,26 @@ Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot)
 - `df.shape[1]` -> Number of Columns
 - `df.info`
 - `df = df.drop(columns=['id'])` <- Remove unnecessary columns
+- `df.describe()`
+- `df['data'].median()`
+- `type(data)`
+- `df.dtypes`
+- Histogram for Quantitative Data:  
+Series_data.plot.hist(title='The desired title for the graph')  
+`height_var = df['height']`  
+`height_var.plot.hist(title='height', bins=10)`  
+`plt.show()`
+- Bar Graph for Qualitative Data:  
+Series_data.value_counts()  
+`blood_type_var = df['blood_type']`  
+`counts = blood_type_var.value_counts()`  
+`counts.plot.bar(title='Frequency of blood types')`  
+`plt.xlabel('blood types')`  
+`plt.ylabel('count')`  
+`plt.show()`  
+
+# 可視化結果を表示する為に必要な関数
+plt.show()
 
 # 03. Rewrite Data
 - Correctly Update Specific Values in Pandas
