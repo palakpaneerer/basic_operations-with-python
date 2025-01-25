@@ -33,3 +33,34 @@ Correct Approach: `df.loc[df['name']=='Mike', 'age'] = 30`
 - `df = df.fillna(df.mode())` <- (not generally recommended)  
 **For a single column:** `df['Nationality'] = df['Nationality'].fillna(df['Nationality'].mode())`
 - `df['height'] = df['height'].fillna(df.groupby('Nationality')['height'].transform('median'))` -> Fills missing values in height based on the median for each Nationality.
+
+
+# 05. Exploratory Data Analysis (EDA)
+### Basic Statistics (Max, Min, Mode, Mean, Median, Quartiles, Variance, Standard Deviation (σ))
+**Variance:**  
+Measures variability, but since it is squared, it changes the unit, making it hard to compare with other statistics.  
+`σ² = (1 / N) * Σ(xᵢ - μ)²`  
+- σ²: Population variance
+- xᵢ: Each data point
+- μ: Population mean
+- N: Total number of data points
+
+**Standard Deviation (σ):**  
+Measures variability in the same unit as the data, making it easier to compare with other statistics.  
+`σ = √[(1 / N) * Σ(xᵢ - μ)²]`  
+- σ: Population standard deviation 
+- xᵢ: Each data point 
+- μ: Population mean
+- N: Total number of data points
+
+### Visualisation
+**Quantitative Data -> Histogram**  
+Key aspects to check:
+- Normal distribution (e.g., the distribution of male heights)
+- Skewed distribution (e.g., income distribution)
+- Bimodal distribution (e.g., two different groups like male and female)
+- Outliers
+**Qualitative Data: -> Bar Graph**  
+Key aspects to check:
+- Values are evenly distributed
+- One specific value is significantly more frequent than others
