@@ -1,10 +1,11 @@
 # basic_operations-with-python
-Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot)
+Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot, seaborn)
 
 
 # 01. Load Data
 - tsv file:
   `pd.read_csv('fine_name.tsv, sep='\t')`
+
 
 # 02. Check Data and Sort Data
 - `df.shape` -> (Number of Rows, Number of Columns)
@@ -16,28 +17,14 @@ Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot)
 - `df['data'].median()`
 - `type(data)`
 - `df.dtypes`
-- Histogram for Quantitative Data:  
-Series_data.plot.hist(title='The desired title for the graph')  
-`height_var = df['height']`  
-`height_var.plot.hist(title='height', bins=10)`  
-`plt.show()`
-- Bar Graph for Qualitative Data:  
-Series_data.value_counts()  
-`blood_type_var = df['blood_type']`  
-`counts = blood_type_var.value_counts()`  
-`counts.plot.bar(title='Frequency of blood types')`  
-`plt.xlabel('blood types')`  
-`plt.ylabel('count')`  
-`plt.show()`  
 
-# 可視化結果を表示する為に必要な関数
-plt.show()
 
 # 03. Rewrite Data
 - Correctly Update Specific Values in Pandas
 When working with pandas DataFrames, attempting to update values through slices can raise a SettingWithCopyWarning. This happens because the operation might modify a copy rather than the original DataFrame, leading to unexpected behavior.  
 Incorrect Approach: `df[df['name']=='Mike']['age'] = 30`  
 Correct Approach: `df.loc[df['name']=='Mike', 'age'] = 30`  
+
 
 # 04. Handling Missing Data
 ### Explicit Missing Data (e.g., NaN, ' ')
@@ -79,8 +66,42 @@ Key aspects to check:
 - Normal distribution (e.g., the distribution of male heights)
 - Skewed distribution (e.g., income distribution)
 - Bimodal distribution (e.g., two different groups like male and female)
-- Outliers
+- Outliers  
+**Code**  
+Series_data.plot.hist(title='The desired title for the graph')  
+`height_var = df['height']`  
+`height_var.plot.hist(title='height', bins=10)`  
+`plt.show()`
+ 
 **Qualitative Data: -> Bar Graph**  
 Key aspects to check:
 - Values are evenly distributed
 - One specific value is significantly more frequent than others
+- Bar Graph for Qualitative Data:  
+**Code**  
+Series_data.value_counts()  
+`blood_type_var = df['blood_type']`  
+`counts = blood_type_var.value_counts()`  
+`counts.plot.bar(title='Frequency of blood types')`  
+`plt.xlabel('blood types')`  
+`plt.ylabel('count')`  
+`plt.show()`
+
+# 06. Check Correlation  
+### Quantitative Data x Quantitative Data  
+**1. Overall Checking**  
+`corr_matrix = df.corr()`  
+`sns.heatmap(corr_matrix)`  
+`plt.show()`  
+**2. Detailed Checking**  
+plt.scatter(data to plot on x-axis, data to plot on y-axis)  
+`plt.scatter(data['weight'],data['height'])`  
+`plt.xlabel('weight')`  
+`plt.ylabel('height')`  
+`plt.show()`  
+
+### Quantitative Data x Qualitative Data
+Correlation coefficients cannot be calculated for this type of data.  
+sns.boxplot(x='column_name', y='column_name', data=df)  
+`sns.boxplot(x='blood_type', y='height', data=df)`  
+`plt.show()`  
