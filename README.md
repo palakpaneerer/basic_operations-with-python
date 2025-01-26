@@ -105,3 +105,33 @@ Correlation coefficients cannot be calculated for this type of data.
 sns.boxplot(x='column_name', y='column_name', data=df)  
 `sns.boxplot(x='blood_type', y='height', data=df)`  
 `plt.show()`  
+
+
+# 07. Algorithms Summary
+| Category           | Algorithms                                                                                 |
+|--------------------|--------------------------------------------------------------------------------------------|
+| Linear Regression  | Multiple Regression, Ridge, Lasso, ElasticNet, Logistic Regression                        |
+| Tree-Based Models  | Decision Tree, Random Forest, GBDT, LightGBM                                              |
+| Neural Networks    | MLP (Multi-Layer Perceptron), RNN (Recurrent Neural Network), CNN (Convolutional Neural Network) |
+| Time Series Models | AR (Autoregressive), MA (Moving Average), ARIMA (Autoregressive Integrated Moving Average) |
+| Others             | Naive Bayes, SVM (Support Vector Machine)                                                 |
+
+
+
+# 08. Evaluation Metrics
+### Regression Problems
+| Metric   | Description                                                               |
+|----------|---------------------------------------------------------------------------|
+| MAE      | Easy to interpret.                                                        |
+| RMAE     | Penalizes large errors significantly.                                     |
+
+### Classification Problems
+| Metric     | Description                                                               |
+|------------|---------------------------------------------------------------------------|
+| Accuracy   | Easy to interpret.                                                        |
+| AUC        | Suitable for binary classification.                                       |
+| Log Loss   | Applicable for multi-class classification.                                |
+
+
+
+
