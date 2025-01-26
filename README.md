@@ -88,6 +88,10 @@ Series_data.value_counts()
 `plt.ylabel('count')`  
 `plt.show()`
 
+**Other settings**
+- `plt.figure(figsize=(5,5))`
+
+
 # 06. Check Correlation  
 ### Quantitative Data x Quantitative Data  
 **1. Overall Checking**  
@@ -110,29 +114,17 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 
 ---
 # B. Step 2: Making Models
-# 07. Split Data
-`from sklearn.model_selection import train_test_split`
-`y = data['height']`
-`X = data[['weight', 'blood_type', 'nationality']`
-`X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2)` <-Default of test_size: 0.25
-`X_train_line = X_train.shape[0]`
-`X_test_line = X_test.shape[0]`
-`print(f'X_train_line: {X_train_line} rows, X_test_line: {X_test_line} rows')`
+# 07. Split Data  
+`from sklearn.model_selection import train_test_split`  
+`y = data['height']`  
+`X = data[['weight', 'blood_type', 'nationality']`  
+`X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2)` <-Default of test_size: 0.25  
+`X_train_line = X_train.shape[0]`  
+`X_test_line = X_test.shape[0]`  
+`print(f'X_train_line: {X_train_line} rows, X_test_line: {X_test_line} rows')`  
 
 
-
-# 08. Set Evaluation
-**RMSE: sklearn doesn’t provide RMSE directly, so calculate it by taking the square root of MSE.**  
-`from sklearn.metrics import mean_squared_error as MSE`  
-`actual = [3,4,6,2,4,6,1]`  
-`pred = [4,2,6,5,3,2,3]`  
-`mse = MSE(actual, pred)`  <- MSE(Actual values, Predicted values)
-`rmse = np.sqrt(mse)`  
-`print(rmse)`  
-
-
-
-
+# 08. Make a Model
 **Algorithms Summary**
 | Category           | Algorithms                                                                                 |
 |--------------------|--------------------------------------------------------------------------------------------|
@@ -142,9 +134,17 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 | Time Series Models | AR (Autoregressive), MA (Moving Average), ARIMA (Autoregressive Integrated Moving Average) |
 | Others             | Naive Bayes, SVM (Support Vector Machine)                                                 |
 
+**Multiple regression model**  
+`from sklearn.linear_model import LinearRegression as LR`  
+`lr = LR()`  
+`lr.fit(X_train, y_train)`  
 
 
-# 08. Evaluation Metrics
+# 09. Predict
+`y_pred = lr.predict(X_test)`  
+`print(y_pred)`  
+
+# 10. Validate
 **Metrics Summary**
 | Task               | Evaluation Metric | Range     | Interpretation         | Features                                   |
 |--------------------|-------------------|-----------|------------------------|-------------------------------------------|
@@ -154,25 +154,32 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 |                    | AUC               | 0 to 1    | Larger is better       | Useful for binary classification problems |
 |                    | Log Loss          | 0 to ∞    | Smaller is better      | Applicable for multi-class classification |
 
+**RMSE: sklearn doesn’t provide RMSE directly, so calculate it by taking the square root of MSE.**   
+`from sklearn.metrics import mean_squared_error as MSE`  
+`mse = MSE(y_test, y_pred)`  
+`rmse_test = np.sqrt(mse)`  
+`print(rmse_test)`  
 
-
-データ分割
-
-# kplを取り出し、変数yに代入
-y = data['kpl']
-# 6つのカラムを指定し、説明変数を表す変数Xを作成
-X = data[['cylinders','displacement','horsepower','acceleration','model_year','origin']]
-
-
-# scikit-learnライブラリからtrain_test_split関数をインポート
-from sklearn.model_selection import train_test_split
-
-# 学習データと評価データに分割
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2) <-test_sizeのデフォルトは0.25
-
-# X_trainとX_testから行数を取り出し、それぞれ変数X_train_line, X_test_lineに代入し、表示
-X_train_line = X_train.shape[0]
-X_test_line = X_test.shape[0]
-print(X_train_line)
-print(X_test_line)
+# 11. Visualise the validation
+To evaluate how well the predicted values match the actual values, you can use a scatter plot. Points along the diagonal line indicate a good match.  
+`plt.scatter(y_test, y_pred)`: plt.scatter(x-axis values, y-axis values)  
+- Get the minimum and maximum values of y_test and y_pred  
+`y_test_min = np.min(y_test)`  
+`y_test_max = np.max(y_test)`  
+`pred_min = np.min(y_pred)`  
+`pred_max = np.max(y_pred)`  
+- Compare the values to determine the final minimum and maximum values  
+`min_value = np.minimum(y_test_min, pred_min)`  
+`max_value = np.maximum(y_test_max, pred_max)`  
+`print(min_value, max_value)`  
+- Set the range for the x-axis and y-axis  
+`plt.xlim([min_value, max_value])`  
+`plt.ylim([min_value, max_value])`  
+- Draw a diagonal line  
+`plt.plot([min_value, max_value], [min_value, max_value])`  
+- Add labels to the x-axis and y-axis  
+`plt.xlabel('Actual Values')`  
+`plt.ylabel('Predicted Values')`  
+- Show the plot  
+`plt.show()`  
 
