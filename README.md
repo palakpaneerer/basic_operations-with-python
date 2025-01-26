@@ -203,7 +203,7 @@ To evaluate how well the predicted values match the actual values, you can use a
 - Prepare variables for the target and explanatory variables  
 `y = df['height']`  
 `X = df[['weight', 'blood_type', 'nationality']]`  
-**- Get dummies**  
+- **Get dummies**  
 **`X = pd.get_dummies(X)` <- Convert all categorical explanatory variables into dummy variables**  
 - Split the data  
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_size=0.2)  
