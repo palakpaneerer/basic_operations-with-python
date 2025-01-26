@@ -116,8 +116,8 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 # B. Step 2: Making Models
 # 07. Split Data  
 `from sklearn.model_selection import train_test_split`  
-`y = data['height']`  
-`X = data[['weight', 'blood_type', 'nationality']`  
+`y = df['height']`  
+`X = df[['weight', 'blood_type', 'nationality']`  
 `X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2)` <-Default of test_size: 0.25  
 `X_train_line = X_train.shape[0]`  
 `X_test_line = X_test.shape[0]`  
@@ -141,8 +141,11 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 
 
 # 09. Predict
-`y_pred = lr.predict(X_test)`  
-`print(y_pred)`  
+`y_pred_train = lr.predict(X_train)`  
+`y_pred_test = lr.predict(X_test)`  
+`print(y_pred_train)`
+`print(y_pred_test)`  
+
 
 # 10. Validate
 **Metrics Summary**
@@ -156,9 +159,15 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 
 **RMSE: sklearn doesn’t provide RMSE directly, so calculate it by taking the square root of MSE.**   
 `from sklearn.metrics import mean_squared_error as MSE`  
-`mse = MSE(y_test, y_pred)`  
-`rmse_test = np.sqrt(mse)`  
+- Calucalate MSE  
+`mse_train = MSE(y_train, y_pred_train)`: MSE(Actual data, Predicted Data)  
+`mse_test = MSE(y_test, y_pred_test)`  
+- Calculate RMSE  
+`rmse_train = np.sqrt(mse_train)`  
+`rmse_test = np.sqrt(mse_test)`  
+`print(rmse_train)`
 `print(rmse_test)`  
+
 
 # 11. Visualise the validation
 To evaluate how well the predicted values match the actual values, you can use a scatter plot. Points along the diagonal line indicate a good match.  
@@ -182,4 +191,43 @@ To evaluate how well the predicted values match the actual values, you can use a
 `plt.ylabel('Predicted Values')`  
 - Show the plot  
 `plt.show()`  
+
+
+---
+# C. Step 3: Improving the Model
+# 12. Dummy variables for categorical data  
+- Import  
+`from sklearn.model_selection import train_test_split`  
+`from sklearn.linear_model import LinearRegression as LR`  
+`from sklearn.metrics import mean_squared_error as MSE`  
+- Prepare variables for the target and explanatory variables  
+`y = df['height']`  
+`X = df[['weight', 'blood_type', 'nationality']]`  
+**- Get dummies**  
+**`X = pd.get_dummies(X)` <- Convert all categorical explanatory variables into dummy variables**  
+- Split the data  
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_size=0.2)  
+- Make a model  
+`lr = LR()`  
+`lr.fit(X_train, y_train)`  
+- Predict  
+`y_pred_train = lr.predict(X_train)`   
+`y_pred_test = lr.predict(X_test)`  
+- Calculate MSE (Mean Squared Error)  
+`mse_train = MSE(y_train, y_pred_train)`  
+`mse_test = MSE(y_test, y_pred_test)`  
+- Calculate RMSE (Root Mean Squared Error)  
+`rmse_train = np.sqrt(mse_train)`  
+`rmse_test = np.sqrt(mse_test)`  
+`print(rmse_train)`  
+`print(rmse_test)`  
+
+
+
+#予測モデルの改善
+#ダミー変数化し、先頭5行を表示する
+dummy_df = pd.get_dummies(data['drive_system'])
+print(dummy_df.head())
+
+
 
