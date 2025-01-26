@@ -1,7 +1,8 @@
 # basic_operations-with-python
 Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot, seaborn)
 
-
+---
+# A. Step 1: Preprocessing
 # 01. Load Data
 - tsv file:
   `pd.read_csv('fine_name.tsv, sep='\t')`
@@ -38,8 +39,8 @@ Correct Approach: `df.loc[df['name']=='Mike', 'age'] = 30`
 - `df = df.fillna(df.mean())` <- Temporary solution, using the mean to fill missing values (not generally recommended).
 - `df = df.fillna(df.median())` <- (not generally recommended)
 - `df = df.fillna(df.mode())` <- (not generally recommended)  
-**For a single column:** `df['Nationality'] = df['Nationality'].fillna(df['Nationality'].mode())`
-- `df['height'] = df['height'].fillna(df.groupby('Nationality')['height'].transform('median'))` -> Fills missing values in height based on the median for each Nationality.
+**For a single column:** `df['nationality'] = df['nationality'].fillna(df['nationality'].mode())`
+- `df['height'] = df['height'].fillna(df.groupby('nationality')['height'].transform('median'))` -> Fills missing values in height based on the median for each Nationality.
 
 
 # 05. Exploratory Data Analysis (EDA)
@@ -107,7 +108,32 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 `plt.show()`  
 
 
-# 07. Algorithms Summary
+---
+# B. Step 2: Making Models
+# 07. Split Data
+`from sklearn.model_selection import train_test_split`
+`y = data['height']`
+`X = data[['weight', 'blood_type', 'nationality']`
+`X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2)` <-Default of test_size: 0.25
+`X_train_line = X_train.shape[0]`
+`X_test_line = X_test.shape[0]`
+`print(f'X_train_line: {X_train_line} rows, X_test_line: {X_test_line} rows')`
+
+
+
+# 08. Set Evaluation
+**RMSE: sklearn doesn’t provide RMSE directly, so calculate it by taking the square root of MSE.**  
+`from sklearn.metrics import mean_squared_error as MSE`  
+`actual = [3,4,6,2,4,6,1]`  
+`pred = [4,2,6,5,3,2,3]`  
+`mse = MSE(actual, pred)`  <- MSE(Actual values, Predicted values)
+`rmse = np.sqrt(mse)`  
+`print(rmse)`  
+
+
+
+
+**Algorithms Summary**
 | Category           | Algorithms                                                                                 |
 |--------------------|--------------------------------------------------------------------------------------------|
 | Linear Regression  | Multiple Regression, Ridge, Lasso, ElasticNet, Logistic Regression                        |
@@ -119,19 +145,34 @@ sns.boxplot(x='column_name', y='column_name', data=df)
 
 
 # 08. Evaluation Metrics
-### Regression Problems
-| Metric   | Description                                                               |
-|----------|---------------------------------------------------------------------------|
-| MAE      | Easy to interpret.                                                        |
-| RMAE     | Penalizes large errors significantly.                                     |
-
-### Classification Problems
-| Metric     | Description                                                               |
-|------------|---------------------------------------------------------------------------|
-| Accuracy   | Easy to interpret.                                                        |
-| AUC        | Suitable for binary classification.                                       |
-| Log Loss   | Applicable for multi-class classification.                                |
+**Metrics Summary**
+| Task               | Evaluation Metric | Range     | Interpretation         | Features                                   |
+|--------------------|-------------------|-----------|------------------------|-------------------------------------------|
+| Regression Task    | MAE               | 0 to ∞    | Smaller is better      | Easy to interpret                         |
+|                    | RMSE              | 0 to ∞    | Smaller is better      | Penalizes large errors significantly (i.e., creates a model that avoids large prediction errors) |
+| Classification Task | Accuracy         | 0 to 1    | Larger is better       | Easy to interpret                         |
+|                    | AUC               | 0 to 1    | Larger is better       | Useful for binary classification problems |
+|                    | Log Loss          | 0 to ∞    | Smaller is better      | Applicable for multi-class classification |
 
 
 
+データ分割
+
+# kplを取り出し、変数yに代入
+y = data['kpl']
+# 6つのカラムを指定し、説明変数を表す変数Xを作成
+X = data[['cylinders','displacement','horsepower','acceleration','model_year','origin']]
+
+
+# scikit-learnライブラリからtrain_test_split関数をインポート
+from sklearn.model_selection import train_test_split
+
+# 学習データと評価データに分割
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=32, test_size=0.2) <-test_sizeのデフォルトは0.25
+
+# X_trainとX_testから行数を取り出し、それぞれ変数X_train_line, X_test_lineに代入し、表示
+X_train_line = X_train.shape[0]
+X_test_line = X_test.shape[0]
+print(X_train_line)
+print(X_test_line)
 
