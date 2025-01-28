@@ -223,11 +223,30 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_s
 `print(rmse_test)`  
 
 
-
-#予測モデルの改善
-#ダミー変数化し、先頭5行を表示する
-dummy_df = pd.get_dummies(data['drive_system'])
-print(dummy_df.head())
-
-
-
+# 13. Log Transformation
+Log transformation is primarily used in linear models (e.g., linear regression, multiple regression) to linearize features that exhibit exponential growth or decay, making them easier to model and improving prediction accuracy. While it is commonly applied in linear models, non-linear models (e.g., random forests or neural networks) can inherently capture complex non-linear relationships, so log transformation is not always necessary for them.
+- Import  
+`from sklearn.model_selection import train_test_split`  
+`from sklearn.linear_model import LinearRegression as LR`  
+`from sklearn.metrics import mean_squared_error as MSE`  
+- **Log Transformation**   
+`df['salary_log']= np.log(df['salary'])`  
+- Prepare variables for the target and explanatory variables  
+`y = df['height']`  
+`X = df[['weight', 'blood_type', 'nationality', 'salary_log']]`  
+- Split data  
+`X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1, test_size=0.2)`  
+- Make a model  
+`lr = LR()`  
+`lr.fit(X_train, y_train)`  
+- Predict  
+`y_pred_train = lr.predict(X_train)`  
+`y_pred_test = lr.predict(X_test)`
+- Calculate MSE (Mean Squared Error)  
+`mse_train = MSE(y_train, y_pred_train)`  
+`mse_test = MSE(y_test, y_pred_test)`  
+- Calculate RMSE (Root Mean Squared Error)  
+`rmse_train = np.sqrt(mse_train)`  
+`rmse_test = np.sqrt(mse_test)`  
+`print(rmse_train)`  
+`print(rmse_test)`  
