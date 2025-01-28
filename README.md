@@ -17,8 +17,11 @@ Basic Operations List with Python (Pandas, Numpy, Matplotlyb.pyplot, seaborn)
 - `df.describe()`
 - `df['data'].median()`
 - `type(data)`
-- `df.dtypes`
-
+- `df.dtypes`  
+**Other settings for Jupyter Notebook**
+`pd.set_option('display.max_rows', None)`  -> Show all rows  
+`pd.set_option('display.max_columns', None)`  -> Show all columns  
+`pd.set_option('display.expand_frame_repr', False)`  -> No need to scroll horizontally anymore  
 
 # 03. Rewrite Data
 - Correctly Update Specific Values in Pandas
